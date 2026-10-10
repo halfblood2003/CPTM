@@ -19,11 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-Third-party tools orchestrated by this software (Prowler, ScoutSuite, Pacu,
-CloudFox, Trivy, kube-hunter, kube-bench, CloudBrute, cloud_enum, PMapper,
-ROADrecon, MicroBurst, GCP Scanner, enumerate-iam, Nmap, and others) remain
-under their respective licenses. This license covers only the CPTM
-orchestration code in this repository.
