@@ -1,4 +1,4 @@
-"""Simulate the exact browser flow the user reported as broken.
+﻿"""Simulate the exact browser flow the user reported as broken.
 
 Reproduces what the React app does, in order:
   1. load the page
@@ -16,7 +16,7 @@ import urllib.error
 import urllib.request
 
 BASE = "http://localhost:8080"
-env = pathlib.Path(__file__).resolve().parent / ".env"
+env = next((p / ".env" for p in pathlib.Path(__file__).resolve().parents if (p / ".env").exists()), pathlib.Path(".env"))
 TOKEN = next(
     (l.split("=", 1)[1].strip() for l in env.read_text().splitlines() if l.startswith("CPTM_TOKEN=")),
     "",
@@ -39,7 +39,7 @@ def hit(path, token=None, method="GET", body=None):
 
 
 def check(label, condition, detail=""):
-    print(f"  [{'PASS' if condition else 'FAIL'}] {label}{(' — ' + detail) if detail else ''}")
+    print(f"  [{'PASS' if condition else 'FAIL'}] {label}{(' â€” ' + detail) if detail else ''}")
     if not condition:
         failures.append(label)
 

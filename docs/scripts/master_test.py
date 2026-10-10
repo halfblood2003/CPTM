@@ -1,4 +1,4 @@
-"""CPTM master test suite — flaws.cloud as the target.
+﻿"""CPTM master test suite â€” flaws.cloud as the target.
 
 Sections
   A. Backend contract: health, auth gate, tool registry, DB writes
@@ -21,6 +21,7 @@ import urllib.error
 import urllib.request
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'backend')))
 from test_inputs import params_for
 
 BASE = "http://localhost:8080"
@@ -28,7 +29,7 @@ REPORT = []
 
 
 def _load_header() -> dict:
-    env = pathlib.Path(__file__).resolve().parent / ".env"
+    env = next((p / ".env" for p in pathlib.Path(__file__).resolve().parents if (p / ".env").exists()), pathlib.Path(".env"))
     for line in env.read_text(encoding="utf-8").splitlines():
         if line.startswith("CPTM_TOKEN="):
             return {"X-CPTM-Token": line.split("=", 1)[1].strip(),
@@ -42,7 +43,7 @@ PASS, FAIL = [], []
 
 def check(section, label, ok, detail=""):
     tag = "PASS" if ok else "FAIL"
-    line = f"[{tag}] {section} :: {label}" + (f" — {detail}" if detail else "")
+    line = f"[{tag}] {section} :: {label}" + (f" â€” {detail}" if detail else "")
     print(line)
     (PASS if ok else FAIL).append((section, label, detail))
 
@@ -378,7 +379,7 @@ print(f"PASS: {len(PASS)}   FAIL: {len(FAIL)}")
 if FAIL:
     print("\nFailures:")
     for s, l, d in FAIL:
-        print(f"  [{s}] {l}" + (f" — {d}" if d else ""))
+        print(f"  [{s}] {l}" + (f" â€” {d}" if d else ""))
 print()
 print(f"tools finished cleanly : {len(finished)} -> {finished}")
 print(f"expected cred failures : {len(expected_fail)}")

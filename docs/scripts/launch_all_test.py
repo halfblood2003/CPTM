@@ -1,4 +1,4 @@
-"""Launch EVERY registered tool through the real API and report what happens.
+﻿"""Launch EVERY registered tool through the real API and report what happens.
 
 This is the check that was missing: a tool can be listed, selectable and have a
 valid template, yet still be impossible to launch. Each tool is launched with
@@ -12,7 +12,7 @@ import urllib.error
 import urllib.request
 
 BASE = "http://localhost:8080"
-env = pathlib.Path(__file__).resolve().parent / ".env"
+env = next((p / ".env" for p in pathlib.Path(__file__).resolve().parents if (p / ".env").exists()), pathlib.Path(".env"))
 TOKEN = next(
     (l.split("=", 1)[1].strip() for l in env.read_text().splitlines() if l.startswith("CPTM_TOKEN=")),
     "",

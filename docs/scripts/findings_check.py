@@ -1,11 +1,11 @@
-"""Check the Findings endpoint output for the most recent job of each tool."""
+﻿"""Check the Findings endpoint output for the most recent job of each tool."""
 import json
 import pathlib
 import sys
 import urllib.request
 
 BASE = "http://localhost:8080"
-env = pathlib.Path(__file__).resolve().parent / ".env"
+env = next((p / ".env" for p in pathlib.Path(__file__).resolve().parents if (p / ".env").exists()), pathlib.Path(".env"))
 H = {}
 for line in env.read_text(encoding="utf-8").splitlines():
     if line.startswith("CPTM_TOKEN="):

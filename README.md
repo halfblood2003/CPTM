@@ -58,7 +58,19 @@ Enter the token from your `.env` when prompted (stored in localStorage).
 - `frontend/` — React + Vite app
 - `tools/` — seeded tool specs (YAML), loaded into the registry at startup
 - `toolbox/` — Dockerfile for the fat all-tools image
+- `docs/` — dev/verification scripts ([SCRIPTS.md](docs/SCRIPTS.md))
 - `docker-compose.yml` — backend + toolbox + volumes
+
+## License
+
+MIT — see [LICENSE](LICENSE). The third-party tools orchestrated by CPTM remain
+under their respective licenses.
+
+## Responsible use
+
+This project orchestrates existing open-source tools for **authorized**
+penetration testing only. You supply your own engagement credentials; respect
+each tool's license and your engagement's rules of engagement.
 
 ## Using it
 
@@ -133,11 +145,11 @@ docker cp toolbox/verify_tools.sh cptm-toolbox:/tmp/vt.sh
 docker exec cptm-toolbox bash /tmp/vt.sh
 
 # validate all seed specs parse (catches YAML mistakes before startup)
-cd backend && python validate_seeds.py
+cd backend && python ../docs/scripts/validate_seeds.py
 ```
 
-`verify_tools.sh` probes each tool with an argument it supports (not just
-`--version`) and reports OK / MISSING / BROKEN per tool.
+More test harnesses (auth gate, live streaming, parser unit tests, per-tool
+launch classification) live in [`docs/SCRIPTS.md`](docs/SCRIPTS.md).
 
 ## Tool status (verified in-image)
 

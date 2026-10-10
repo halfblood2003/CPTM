@@ -1,4 +1,4 @@
-"""Show the real failure reason for a given tool's most recent job."""
+﻿"""Show the real failure reason for a given tool's most recent job."""
 import json
 import pathlib
 import re
@@ -6,7 +6,7 @@ import sys
 import urllib.request
 
 BASE = "http://localhost:8080"
-env = pathlib.Path(__file__).resolve().parent / ".env"
+env = next((p / ".env" for p in pathlib.Path(__file__).resolve().parents if (p / ".env").exists()), pathlib.Path(".env"))
 TOKEN = next(
     (l.split("=", 1)[1].strip() for l in env.read_text().splitlines() if l.startswith("CPTM_TOKEN=")),
     "",
@@ -38,7 +38,7 @@ text = re.sub(r"\x1b\[[0-9;?]*[a-zA-Z]", "", out)
 text = re.sub(r"\x1b\]8;;[^\x1b]*\x1b\\\\", "", text)
 DROP = re.compile(
     r"prowler-cloud|Start free|Prowler Cloud|CLI - v|_ __|/\s*__|\\\\__|"
-    r"^\s*[│|]\s*$|^\s*[│|]|Snapshot|sign-up|utm_source|"
+    r"^\s*[â”‚|]\s*$|^\s*[â”‚|]|Snapshot|sign-up|utm_source|"
     r"autonomous triage|Continuous Security|Triage|Lighthouse",
     re.I,
 )

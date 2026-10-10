@@ -1,4 +1,4 @@
-"""Live test of the running CPTM stack.
+﻿"""Live test of the running CPTM stack.
 
 Exercises the parts that a REST-only check misses:
   1. launch a real tool job over REST
@@ -21,7 +21,7 @@ WS = "ws://localhost:8080"
 
 
 def load_token() -> str:
-    env = pathlib.Path(__file__).resolve().parent / ".env"
+    env = next((p / ".env" for p in pathlib.Path(__file__).resolve().parents if (p / ".env").exists()), pathlib.Path(".env"))
     for line in env.read_text(encoding="utf-8").splitlines():
         if line.startswith("CPTM_TOKEN="):
             return line.split("=", 1)[1].strip()

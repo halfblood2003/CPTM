@@ -1,4 +1,4 @@
-"""Audit tool specs for placeholders that have no matching parameter.
+﻿"""Audit tool specs for placeholders that have no matching parameter.
 
 A template referencing {foo} with no `foo` param makes the tool impossible to
 launch from the GUI (the launch endpoint rejects it as a missing required
@@ -13,7 +13,7 @@ import sys
 import yaml
 
 AUTO = {"job_id"}  # injected by the backend at launch time
-root = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "tools")
+root = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "tools")
 
 bad = 0
 checked = 0

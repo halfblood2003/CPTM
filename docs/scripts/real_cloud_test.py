@@ -1,4 +1,4 @@
-"""Real-cloud test pass against the running CPTM stack.
+﻿"""Real-cloud test pass against the running CPTM stack.
 
 Two kinds of test:
   A. Recon tools against intentionally-public cloud training infrastructure
@@ -17,7 +17,7 @@ import urllib.request
 
 BASE = "http://localhost:8080"
 
-env = pathlib.Path(__file__).resolve().parent / ".env"
+env = next((p / ".env" for p in pathlib.Path(__file__).resolve().parents if (p / ".env").exists()), pathlib.Path(".env"))
 TOKEN = next(
     (l.split("=", 1)[1].strip() for l in env.read_text().splitlines() if l.startswith("CPTM_TOKEN=")),
     "",

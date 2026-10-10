@@ -1,4 +1,4 @@
-"""Validate every seed tool spec parses and has the required fields."""
+﻿"""Validate every seed tool spec parses and has the required fields."""
 import glob
 import os
 import sys
@@ -6,7 +6,7 @@ import sys
 import yaml
 
 REQUIRED = ("name", "command_template")
-root = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "tools")
+root = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "tools")
 bad = 0
 files = sorted(glob.glob(os.path.join(root, "*.yaml")))
 for f in files:

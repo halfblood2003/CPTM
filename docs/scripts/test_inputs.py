@@ -1,4 +1,4 @@
-"""Per-tool launch inputs for the classification test.
+﻿"""Per-tool launch inputs for the classification test.
 
 Kept separate from the runner so the harness cannot invent arguments a tool
 does not accept (which produces false "bug" reports). Every value here is a

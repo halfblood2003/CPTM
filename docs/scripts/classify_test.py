@@ -1,4 +1,4 @@
-"""Launch every tool and classify WHY it failed.
+﻿"""Launch every tool and classify WHY it failed.
 
 A failure is only acceptable if it is a genuine credential/permission/target
 error (no cloud credentials are mounted on this host). Anything else - a bad
@@ -14,6 +14,7 @@ import urllib.error
 import urllib.request
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'backend')))
 from test_inputs import params_for
 
 BASE = "http://localhost:8080"
@@ -21,7 +22,7 @@ BASE = "http://localhost:8080"
 
 def _load_header() -> dict:
     """Read the access key from .env at runtime (never printed)."""
-    env = pathlib.Path(__file__).resolve().parent / ".env"
+    env = next((p / ".env" for p in pathlib.Path(__file__).resolve().parents if (p / ".env").exists()), pathlib.Path(".env"))
     for line in env.read_text(encoding="utf-8").splitlines():
         if line.startswith("CPTM_TOKEN="):
             return {

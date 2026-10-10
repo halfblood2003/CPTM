@@ -1,8 +1,9 @@
-"""Unit tests for every tool parser with realistic output samples."""
+﻿"""Unit tests for every tool parser with realistic output samples."""
 import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'backend')))
 from cptm.parsers import parse_output
 
 CASES = []
@@ -133,7 +134,7 @@ case(
 case(
     "cloudfox arn + loot",
     "cloudfox",
-    """[🦊] Enumerating IAM principals
+    """[ðŸ¦Š] Enumerating IAM principals
 arn:aws:iam::123456789012:role/admin
 Loot File: [/workspace/loot/cloudfox/iam-principals.txt]
 CRITICAL: profile missing""",
