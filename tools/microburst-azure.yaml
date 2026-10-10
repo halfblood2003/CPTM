@@ -1,0 +1,25 @@
+name: microburst-azure
+display_name: MicroBurst (Azure)
+description: Azure enumeration toolkit — blob storage account enumeration from a base name. Other MicroBurst modules are available in the web Terminal (/opt/tools/MicroBurst).
+category: azure
+docker_image: cptm-toolbox:latest
+# MicroBurst's script only DEFINES the Invoke-EnumerateAzureBlobs function when
+# dot-sourced, so we run pwsh, dot-source it, then invoke the function.
+# The whole PowerShell snippet is passed as ONE -Command argument via sh -c
+# (backend routes commands containing ';' through a shell automatically).
+command_template: 'pwsh -NoProfile -Command ". /opt/tools/MicroBurst/Misc/Invoke-EnumerateAzureBlobs.ps1; Invoke-EnumerateAzureBlobs -Base {base_name} {output_arg}"'
+output_type: microburst
+params:
+  - name: base_name
+    label: Base name
+    type: string
+    default: ""
+    required: true
+    help: Storage account base name to enumerate (e.g. contoso). Results appear in the Findings tab as they are DNS-resolved.
+  - name: output_arg
+    label: Write results to file
+    type: flag
+    flag: -OutputFile
+    default: ""
+    required: false
+    help: Leave empty to print to console

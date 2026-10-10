@@ -1,0 +1,19 @@
+name: prowler-gcp
+display_name: Prowler (GCP)
+description: GCP security posture audit. Uses /creds/gcp/sa.json via GOOGLE_APPLICATION_CREDENTIALS.
+category: gcp
+docker_image: cptm-toolbox:latest
+command_template: "prowler gcp {project} --output-formats json-ocsf --output-directory /artifacts/jobs/{job_id} {extra_args}"
+output_type: prowler
+params:
+  - name: project
+    label: Project ID (empty = all visible)
+    type: flag
+    flag: --project-id
+    default: ""
+    required: false
+  - name: extra_args
+    label: Extra CLI arguments
+    type: string
+    default: ""
+    required: false

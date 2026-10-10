@@ -1,0 +1,32 @@
+name: trivy-image
+display_name: Trivy (image/IaC scan)
+description: Scan container images or IaC configs (terraform, cloudformation, k8s manifests) for vulnerabilities and misconfigurations. Writes a JSON report into the job artifacts.
+category: general
+docker_image: cptm-toolbox:latest
+command_template: "trivy {scan_type} --format json --output /artifacts/jobs/{job_id}/trivy.json {scanners} {target} {extra_args}"
+output_type: trivy
+params:
+  - name: scan_type
+    label: Scan type
+    type: select
+    default: image
+    options: ["image", "fs", "config", "repo", "rootfs"]
+    required: false
+  - name: target
+    label: Target (image ref or path)
+    type: string
+    default: ""
+    required: true
+    help: e.g. nginx:1.27-alpine, or /workspace for a filesystem scan
+  - name: scanners
+    label: Scanners
+    type: select
+    default: ""
+    options: ["", "--scanners vuln", "--scanners misconfig", "--scanners vuln,misconfig,secret"]
+    required: false
+  - name: extra_args
+    label: Extra CLI arguments
+    type: string
+    default: ""
+    required: false
+    help: e.g. --severity HIGH,CRITICAL or --quiet

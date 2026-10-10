@@ -1,0 +1,28 @@
+name: kube-hunter
+display_name: kube-hunter
+description: Kubernetes cluster vulnerability scanner — run from outside or inside the cluster.
+category: kubernetes
+docker_image: cptm-toolbox:latest
+command_template: "kube-hunter {mode} {target} {extra_args}"
+output_type: kube-hunter
+params:
+  - name: target
+    label: Target host/IP (empty for in-cluster modes)
+    type: flag
+    flag: --remote
+    default: ""
+    required: false
+    help: With --remote this is the remote master to scan
+  - name: mode
+    label: In-cluster mode
+    type: select
+    default: ""
+    options: ["", "--pod", "--network"]
+    required: false
+    help: Leave empty to scan a remote target, or use --pod/--network for in-cluster hunting
+  - name: extra_args
+    label: Extra CLI arguments
+    type: string
+    default: ""
+    required: false
+    help: Add --active for active hunting (destructive; requires written authorisation)

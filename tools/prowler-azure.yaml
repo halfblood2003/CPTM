@@ -1,0 +1,26 @@
+name: prowler-azure
+display_name: Prowler (Azure)
+description: Azure security posture audit against Microsoft Defender recommendations and CIS. Writes reports into the job artifacts.
+category: azure
+docker_image: cptm-toolbox:latest
+command_template: "prowler azure {subscription} {auth} --output-formats json-ocsf --output-directory /artifacts/jobs/{job_id} {extra_args}"
+output_type: prowler
+params:
+  - name: subscription
+    label: Subscription ID (empty = all visible)
+    type: flag
+    flag: --subscription-id
+    default: ""
+    required: false
+  - name: auth
+    label: Auth method
+    type: select
+    default: "--sp-env-auth"
+    options: ["--sp-env-auth", "--az-cli-auth", "--browser-auth", ""]
+    required: false
+    help: "--sp-env-auth reads a service principal from environment variables (see /creds/azure)"
+  - name: extra_args
+    label: Extra CLI arguments
+    type: string
+    default: ""
+    required: false

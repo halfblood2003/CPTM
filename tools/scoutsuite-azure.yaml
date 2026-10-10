@@ -1,0 +1,13 @@
+name: scoutsuite-azure
+display_name: ScoutSuite (Azure)
+description: Azure security auditing — full configuration review with an HTML report in the job artifacts.
+category: azure
+docker_image: cptm-toolbox:latest
+command_template: "scout azure --cli --report-dir /artifacts/jobs/{job_id} {extra_args}"
+output_type: scoutsuite
+params:
+  - name: extra_args
+    label: Extra CLI arguments
+    type: string
+    default: ""
+    required: false

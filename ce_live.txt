@@ -1,0 +1,10 @@
+﻿python :   File "<string>", line 18
+At line:1 char:188
++ ... 73582990c4f903d\projects\Default\cloud-pentest-manager' ; python -c "
++                                                               ~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (  File "<string>", line 18:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+    print(f'  ...{j[" status\]}
+                    ^
+SyntaxError: unterminated string literal (detected at line 18)

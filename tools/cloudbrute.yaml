@@ -1,0 +1,25 @@
+name: cloudbrute
+display_name: CloudBrute
+description: Cloud agnostic brute-forcer for public assets (buckets, blobs, apps) across AWS/Azure/GCP.
+category: general
+docker_image: cptm-toolbox:latest
+# CloudBrute resolves config/modules relative to CWD, so run from its repo dir.
+command_template: "sh -c 'cd /opt/tools/CloudBrute && /usr/local/bin/cloudbrute -d {domain} -k {keyword} -w /opt/tools/CloudBrute/data/storage_small.txt {extra_args}'"
+output_type: cloudbrute
+params:
+  - name: keyword
+    label: Keyword (company name)
+    type: string
+    default: ""
+    required: true
+  - name: domain
+    label: Domain
+    type: string
+    default: ""
+    required: true
+  - name: extra_args
+    label: Extra CLI arguments
+    type: string
+    default: ""
+    required: false
+    help: e.g. -t 50 (threads), -m (enable more modules)

@@ -1,0 +1,28 @@
+name: prowler-aws
+display_name: Prowler (AWS)
+description: AWS security posture and misconfiguration audit (CSPM). Writes machine-readable reports into the job artifacts.
+category: aws
+docker_image: cptm-toolbox:latest
+# Prowler 5.x only accepts --output-formats {csv,json-asff,json-ocsf,html,sarif}.
+command_template: "prowler aws {profile} {region} --output-formats json-ocsf --output-directory /artifacts/jobs/{job_id} {extra_args}"
+output_type: prowler
+params:
+  - name: profile
+    label: AWS profile
+    type: flag
+    flag: --profile
+    default: default
+    required: false
+    help: Profile name from /creds/aws/credentials
+  - name: region
+    label: Region (single; empty = all regions)
+    type: flag
+    flag: --region
+    default: ""
+    required: false
+  - name: extra_args
+    label: Extra CLI arguments
+    type: string
+    default: ""
+    required: false
+    help: e.g. --services s3,iam or --severity critical,high

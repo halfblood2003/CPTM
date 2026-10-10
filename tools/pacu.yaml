@@ -1,0 +1,36 @@
+﻿name: pacu
+display_name: Pacu (AWS exploitation)
+description: AWS exploitation framework â€” the "Metasploit of AWS". Imports an AWS profile's keys into a fresh session, then runs one named module non-interactively. For the full interactive console use the Terminal page.
+category: aws
+docker_image: cptm-toolbox:latest
+# Pacu prompts interactively unless keys are supplied up front, so the session
+# imports keys from the mounted AWS profile first. --module-name is required to
+# select the module; the module is NOT a free-standing positional argument.
+command_template: "pacu --new-session cptm{job_id} --import-keys {profile} && pacu --session cptm{job_id} {exec_flag} --module-name {module} {module_args}"
+output_type: generic
+params:
+  - name: profile
+    label: AWS profile to import
+    type: string
+    default: default
+    required: true
+    help: Profile name from /creds/aws/credentials
+  - name: exec_flag
+    label: Mode
+    type: select
+    default: "--exec"
+    options: ["--exec", "--module-info"]
+    required: false
+    help: --exec runs the module; --module-info only describes it
+  - name: module
+    label: Module name
+    type: string
+    default: "iam__enum_users_roles_policies_groups"
+    required: true
+    help: Run 'pacu --list-modules' in the Terminal page to see every module
+  - name: module_args
+    label: Module arguments
+    type: string
+    default: ""
+    required: false
+    help: e.g. --module-args='--all-users'

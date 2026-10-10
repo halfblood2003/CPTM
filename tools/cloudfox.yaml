@@ -1,0 +1,30 @@
+name: cloudfox
+display_name: CloudFox (AWS)
+description: Map AWS attack paths — enumerate principals, roles, secrets and interesting resources, with loot files written to the job artifacts.
+category: aws
+docker_image: cptm-toolbox:latest
+# Global flags must precede the module name. --outdir is the loot directory
+# (-o is output format, brief|wide). --outdir comes after the module here
+# because cloudfox accepts it for every module.
+command_template: "cloudfox aws {profile_flag} {command} --outdir /artifacts/jobs/{job_id} {extra_args}"
+output_type: cloudfox
+params:
+  - name: profile_flag
+    label: Profile selection
+    type: select
+    default: "-p default"
+    options: ["-p default", "-a", ""]
+    required: false
+    help: "Use '-p default' for one profile, '-a' for all profiles in the credentials file, or empty together with extra_args"
+  - name: command
+    label: CloudFox module
+    type: select
+    default: all-checks
+    options: ["all-checks", "inventory", "instances", "secrets", "principals", "permissions", "role-trusts", "resource-trusts", "endpoints", "buckets", "access-keys", "env-vars", "ecs-tasks", "eks", "lambda", "network-ports"]
+    required: false
+  - name: extra_args
+    label: Extra CLI arguments
+    type: string
+    default: ""
+    required: false
+    help: e.g. -v 2 for more verbose output

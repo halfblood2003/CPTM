@@ -1,0 +1,14 @@
+name: kube-bench
+display_name: kube-bench
+description: CIS Kubernetes Benchmark scanner.
+category: kubernetes
+docker_image: cptm-toolbox:latest
+command_template: kube-bench {extra_args}
+output_type: kube-bench
+params:
+  - name: extra_args
+    label: Extra CLI arguments
+    type: string
+    default: ""
+    required: false
+    help: e.g. --benchmark cis-1.8 (run inside cluster/terminal typically)

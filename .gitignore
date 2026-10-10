@@ -1,0 +1,11 @@
+node_modules/
+dist/
+__pycache__/
+*.pyc
+*.db
+.env
+credentials/*
+!credentials/README.md
+build*.log
+*.db
+t.db

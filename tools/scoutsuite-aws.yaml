@@ -1,0 +1,19 @@
+name: scoutsuite-aws
+display_name: ScoutSuite (AWS)
+description: Multi-cloud security auditing framework — AWS attack surface review with an HTML report in the job artifacts.
+category: aws
+docker_image: cptm-toolbox:latest
+command_template: "scout aws {profile} --report-dir /artifacts/jobs/{job_id} {extra_args}"
+output_type: scoutsuite
+params:
+  - name: profile
+    label: AWS profile
+    type: flag
+    flag: --profile
+    default: default
+    required: false
+  - name: extra_args
+    label: Extra CLI arguments
+    type: string
+    default: ""
+    required: false

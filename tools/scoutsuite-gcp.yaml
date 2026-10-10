@@ -1,0 +1,19 @@
+name: scoutsuite-gcp
+display_name: ScoutSuite (GCP)
+description: GCP security auditing — full configuration review with an HTML report in the job artifacts.
+category: gcp
+docker_image: cptm-toolbox:latest
+command_template: "scout gcp --user-account {project} --report-dir /artifacts/jobs/{job_id} {extra_args}"
+output_type: scoutsuite
+params:
+  - name: project
+    label: GCP project ID
+    type: flag
+    flag: --project-id
+    default: ""
+    required: true
+  - name: extra_args
+    label: Extra CLI arguments
+    type: string
+    default: ""
+    required: false

@@ -1,0 +1,13 @@
+name: enumerate-iam
+display_name: enumerate-iam (AWS)
+description: Brute-force IAM permissions of the current credentials to find allowed-but-undocumented API calls.
+category: aws
+docker_image: cptm-toolbox:latest
+command_template: enumerate-iam {extra_args}
+output_type: enumerate-iam
+params:
+  - name: extra_args
+    label: Extra CLI arguments
+    type: string
+    default: ""
+    required: false

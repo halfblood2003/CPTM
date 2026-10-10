@@ -1,0 +1,33 @@
+name: gcp-scanner
+display_name: GCP Scanner
+description: GCP security scanner — enumerate projects, service accounts, compute, storage and useful permissions from a service-account key.
+category: gcp
+docker_image: cptm-toolbox:latest
+command_template: "gcp-scanner -o /artifacts/jobs/{job_id} {light}{key_path} {project} {extra_args}"
+output_type: gcp-scanner
+params:
+  - name: key_path
+    label: SA key directory
+    type: flag
+    flag: -k
+    default: /creds/gcp
+    required: false
+    help: Directory containing the service-account JSON key(s)
+  - name: project
+    label: Target project
+    type: flag
+    flag: -p
+    default: ""
+    required: false
+    help: Specify to scan a single project
+  - name: light
+    label: Light scan (key fields only)
+    type: select
+    default: ""
+    options: ["", "-ls"]
+    required: false
+  - name: extra_args
+    label: Extra CLI arguments
+    type: string
+    default: ""
+    required: false

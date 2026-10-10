@@ -1,0 +1,21 @@
+﻿name: pmapper
+display_name: PMapper (AWS)
+description: AWS IAM privilege-escalation path analysis â€” builds the IAM graph, then finds escalation routes.
+category: aws
+docker_image: cptm-toolbox:latest
+# Create the graph, then run the privesc preset. Chained via a shell.
+command_template: "pmapper {profile} graph create && pmapper {profile} query -s 'preset privesc *' {extra_args}"
+output_type: generic
+params:
+  - name: profile
+    label: AWS profile
+    type: flag
+    flag: --profile
+    default: default
+    required: false
+    help: Profile from /creds/aws/credentials
+  - name: extra_args
+    label: Extra CLI arguments
+    type: string
+    default: ""
+    required: false

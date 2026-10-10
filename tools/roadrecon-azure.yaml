@@ -1,0 +1,37 @@
+﻿name: roadrecon-azure
+display_name: ROADrecon (Azure)
+description: Azure AD reconnaissance â€” authenticate, then dump directory objects for attack-path analysis. Output lands in the job artifacts.
+category: azure
+docker_image: cptm-toolbox:latest
+# RoadRecon needs an explicit tenant; it cannot infer one from a bare username.
+# The && is executed by a shell (see build_command_args).
+command_template: "roadrecon auth -u {username} -p {password} -t {tenant} {extra_auth} && cd /artifacts/jobs/{job_id} && roadrecon gather {extra_args}"
+output_type: generic
+params:
+  - name: username
+    label: Azure AD username
+    type: string
+    default: ""
+    required: true
+  - name: password
+    label: Password
+    type: string
+    default: ""
+    required: true
+  - name: tenant
+    label: Tenant ID or domain
+    type: string
+    default: ""
+    required: true
+    help: e.g. contoso.onmicrosoft.com or the tenant GUID
+  - name: extra_auth
+    label: Extra auth flags
+    type: string
+    default: ""
+    required: false
+    help: e.g. --device-code, or -c <public-client-id>
+  - name: extra_args
+    label: Extra gather flags
+    type: string
+    default: ""
+    required: false

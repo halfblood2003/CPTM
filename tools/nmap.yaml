@@ -1,0 +1,19 @@
+name: nmap
+display_name: Nmap
+description: Network/host/port scanning from the toolbox container.
+category: general
+docker_image: cptm-toolbox:latest
+command_template: "nmap {flags} {target}"
+output_type: nmap
+params:
+  - name: flags
+    label: Nmap flags
+    type: string
+    default: -sV -T4 --top-ports 100
+    required: false
+  - name: target
+    label: Target (CIDR / host)
+    type: string
+    default: ""
+    required: true
+    help: Only scan hosts inside your engagement scope

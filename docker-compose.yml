@@ -1,0 +1,68 @@
+services:
+  backend:
+    build: ./backend
+    image: cptm-backend:latest
+    container_name: cptm-backend
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8080:8000"
+    # Reads CPTM_TOKEN (and any overrides) from .env — see .env.example
+    env_file:
+      - .env
+    environment:
+      CPTM_DB: /data/cptm.db
+      CPTM_TOOLBOX_IMAGE: cptm-toolbox:latest
+      CPTM_WORKSPACE: /workspace
+      CPTM_ARTIFACTS: /artifacts
+      CPTM_CRED_DIR: /creds
+      CPTM_NETWORK: cptm-net
+      CPTM_SEED_DIR: /seeds
+      CPTM_FRONTEND_DIST: /frontend
+      # Job containers inherit mounts from the toolbox container, so compose
+      # (not us) resolves host paths. No host-path guessing needed.
+      CPTM_VOLUMES_FROM: cptm-toolbox
+    volumes:
+      - cptm-data:/data
+      - cptm-workspace:/workspace
+      - cptm-artifacts:/artifacts
+      - ./tools:/seeds:ro
+      - ./frontend/dist:/frontend:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - cptm-net
+
+  toolbox:
+    build: ./toolbox
+    image: cptm-toolbox:latest
+    container_name: cptm-toolbox
+    restart: unless-stopped
+    command: sleep infinity
+    environment:
+      TERM: xterm-256color
+      AWS_SHARED_CREDENTIALS_FILE: /creds/aws/credentials
+      AWS_CONFIG_FILE: /creds/aws/config
+      GOOGLE_APPLICATION_CREDENTIALS: /creds/gcp/sa.json
+      # Writable config dir: azure-cli must write a profile on first use, and
+      # /creds is mounted read-only.
+      AZURE_CONFIG_DIR: /root/.azure
+    volumes:
+      - cptm-workspace:/workspace
+      - cptm-artifacts:/artifacts
+      - ./credentials:/creds:ro
+    networks:
+      - cptm-net
+
+networks:
+  cptm-net:
+    name: cptm-net
+    driver: bridge
+
+# Explicit names so containers spawned by the backend (via docker.sock) can
+# reference the same volumes the compose stack uses.
+volumes:
+  cptm-data:
+    name: cptm-data
+  cptm-workspace:
+    name: cptm-workspace
+  cptm-artifacts:
+    name: cptm-artifacts
